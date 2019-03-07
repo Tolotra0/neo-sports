@@ -1,6 +1,5 @@
 from flask import Blueprint, jsonify, request
 from models.db_engine import engine
-from utilities import result_to_dict
 from sqlalchemy.sql import text
 from werkzeug.security import generate_password_hash, check_password_hash
 
@@ -13,7 +12,7 @@ def get_all_accounts():
     conn = engine.connect()
     result = conn.execute('SELECT * FROM Admins')
     conn.close()
-    return jsonify(result_to_dict(result))
+    return jsonify([dict(r) for r in result])
 
 
 @accounts_api.route('/login', methods=['POST'])

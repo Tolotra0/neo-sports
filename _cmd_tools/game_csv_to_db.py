@@ -1,5 +1,4 @@
 from sqlalchemy.orm import sessionmaker
-from sqlalchemy import desc
 from models.db_models import Game, TeamGameStat
 from models.db_engine import engine
 import pandas as pd
