@@ -22,7 +22,7 @@ def application():
 # Commandline tools
 # -----------------
 
-from cmd_tools.game_csv_to_db import game_csv_to_db
+from _cmd_tools.game_csv_to_db import game_csv_to_db
 
 
 @app.cli.command('game_csv_to_db')

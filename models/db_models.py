@@ -100,6 +100,7 @@ class Player(Base):
 
     Id = Column(INTEGER(16), primary_key=True)
     Name = Column(String(255), nullable=False)
+    Age = Column(INTEGER(4), nullable=False)
     Height = Column(Float)
     Weight = Column(Float)
     BirthDate = Column(Date)
