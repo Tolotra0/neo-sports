@@ -71,6 +71,7 @@ class Team(Base):
     Id = Column(INTEGER(4), primary_key=True)
     FullName = Column(String(255), nullable=False)
     ShortName = Column(String(3), nullable=False)
+    ShortNameAlt = Column(String(3))
     CityId = Column(ForeignKey('Cities.Id'), index=True)
 
     City = relationship('City')
@@ -129,7 +130,7 @@ class PlayerGameStat(Base):
     TOV = Column(INTEGER(10))
     STL = Column(INTEGER(10))
     BLK = Column(INTEGER(10))
-    PF = Column(INTEGER(10))
+    TF = Column(INTEGER(10))
     PTS = Column(INTEGER(10))
 
     Game = relationship('Game')
@@ -153,7 +154,7 @@ class TeamGameStat(Base):
     TOV = Column(INTEGER(10))
     STL = Column(INTEGER(10))
     BLK = Column(INTEGER(10))
-    PF = Column(INTEGER(10))
+    TF = Column(INTEGER(10))
     PTS = Column(INTEGER(10))
 
     Game = relationship('Game')

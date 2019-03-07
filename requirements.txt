@@ -1,4 +1,6 @@
+python==3.7.*
 flask==1.0.2
 sqlalchemy==1.2.15
 pymysql==0.9.3
 sqlacodegen==2.0.1
+pandas==0.23.4
