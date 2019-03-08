@@ -13,8 +13,6 @@ from main_api._common_requests_parameters import base_game_request, \
 
 team_stats_api = Blueprint('team_stats_api', __name__)
 
-game_columns = ['Duration', 'Win', 'TeamFullName', 'TeamShortName',
-                'GameType', 'LocationType']
 
 grouping_columns = ['TeamShortName', 'TeamFullName', 'GameType', 'LocationType']
 
@@ -39,7 +37,26 @@ def season_games_resume(team, begin_year):
     return _games_resume(team, begin_year)
 
 
+# Gets all time games stats average for the team
+# EXAMPLE: /main/team/HOU/alltime/games_stats_avg
+# -> Get all time game stats average for the Houston Rockets
+@team_stats_api.route('/<string:team>/alltime/games_stats_avg')
+def alltime_game_stats_avg(team):
+    return _game_stats_average(team)
+
+
+# Gets the season games stats average for the team
+# EXAMPLE: /main/team/HOU/2014/games_stats_avg
+# -> Get the 2014-2015 season game stats average for the Houston Rockets
+@team_stats_api.route('/<string:team>/<int:begin_year>/games_stats_avg')
+def season_game_stats_avg(team, begin_year):
+    return _game_stats_average(team, begin_year)
+
+
 def _games_resume(team, begin_year=None):
+    game_columns = ['Duration', 'Win', 'TeamFullName', 'TeamShortName',
+                    'GameType', 'LocationType']
+
     conn = engine.connect()
     df = pd.DataFrame()
 
@@ -76,3 +93,31 @@ def _games_resume(team, begin_year=None):
     conn.close()
 
     return jsonify(homes, aways)
+
+
+def _game_stats_average(team, begin_year=None):
+    desired_columns = ['TeamFullName', 'TeamShortName', 'FGM', 'FGA', 'TPM', 'TPA', 'FTM',
+                       'FTA', 'OREB', 'DREB', 'AST', 'TOV', 'STL', 'BLK', 'TF', 'PTS']
+
+    conn = engine.connect()
+    df = pd.DataFrame()
+
+    if begin_year is None:
+        s = text(main_req + ' WHERE ' + team_filter_req)
+        df = pd.read_sql(s, conn, params={'team': team})
+    else:
+        s = text(main_req + season_filter + ' AND ' + team_filter_req)
+        df = pd.read_sql(s, conn, params={
+            'team': team,
+            'beginYear': begin_year,
+            'beginMonth': season_start_month,
+            'endYear': begin_year + 1,
+            'endMonth': season_end_month
+        })
+
+    df = df[desired_columns]
+
+    df = pd.DataFrame(df.groupby(by=['TeamFullName', 'TeamShortName'], as_index=False).mean())
+
+    conn.close()
+    return jsonify(df.to_json(orient='records'))
