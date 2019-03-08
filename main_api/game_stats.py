@@ -1,27 +1,16 @@
-from flask import Blueprint, jsonify, request
+#
+# API for getting games statistics
+# Stats given here are for ONE team
+#
+
+from flask import Blueprint, jsonify
 from models.db_engine import engine
 from sqlalchemy.sql import text
 
+from main_api._common_requests_parameters import base_game_request, sorting, \
+    season_start_month, season_end_month, season_filter
 
 game_stats_api = Blueprint('game_stats_api', __name__)
-
-
-season_start_month = 10
-season_end_month = 4
-
-
-# Note the aliases in the two Teams tables: Team and Opponents
-base_game_request = 'SELECT Games.Date, Games.Duration, Games.Win, Team.FullName AS TeamFullName, \
-                Team.ShortName TeamShortName, Opponent.FullName AS OpFullName, \
-                Opponent.ShortName AS OpShortName, TeamGameStats.*, \
-                GameTypes.Type AS GameType, GameLocationTypes.LocationType FROM Games \
-                JOIN Teams Team ON Games.TeamId = Team.Id \
-                JOIN Teams Opponent ON Opponent.Id = Games.OpponentId \
-                JOIN TeamGameStats ON Games.Id = TeamGameStats.GameId \
-                JOIN GameTypes ON Games.GameTypeId = GameTypes.Id \
-                JOIN GameLocationTypes ON Games.GameLocationTypeId = GameLocationTypes.Id'
-
-sorting = ' ORDER BY Team.Id, Games.Date '
 
 
 @game_stats_api.route('/', methods=['GET'])
@@ -93,9 +82,7 @@ def season(begin_year, team=None):
 
     result = None
 
-    s = base_game_request + \
-        ' WHERE ((YEAR(Games.Date) = :beginYear AND MONTH(Games.Date) >= :beginMonth) \
-        OR (YEAR(Games.Date) = :endYear AND MONTH(Games.Date) <= :endMonth)) '
+    s = base_game_request + season_filter
 
     if team is None:
         s = text(s + sorting)
