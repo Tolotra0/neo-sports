@@ -1,5 +1,5 @@
 #
-# API for getting games statistics
+# API for getting GAMES statistics
 # Stats given here are for ONE team
 #
 
@@ -26,7 +26,7 @@ def get_all():
     return jsonify([dict(row) for row in result])
 
 
-# EXAMPLE: /api/games/team/CLE/2016/12/25
+# EXAMPLE: /main/games/team/CLE/2016/12/25
 # -> CLE game for 25 December 2016
 #
 @game_stats_api.route('/team/<string:team>', methods=['GET'])
@@ -70,9 +70,9 @@ def teams(team, year=None, month=None, day=None):
 
 
 # EXAMPLES:
-# /api/games/season/2017
+# /main/games/season/2017
 # -> 2017-2018 season's games
-# /api/games/season/2017/TOR
+# /main/games/season/2017/TOR
 # -> 2017-2018 season's games for Toronto Raptors
 #
 @game_stats_api.route('/season/<int:begin_year>', methods=['GET'])

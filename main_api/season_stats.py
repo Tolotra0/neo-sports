@@ -1,5 +1,5 @@
 #
-# API for getting season statistics
+# API for getting SEASON statistics
 #
 
 from flask import Blueprint, jsonify
@@ -24,7 +24,7 @@ team_columns = ['TeamFullName', 'TeamShortName']
 
 
 # Get the AVERAGE of total stats for each team in one season
-# EXAMPLE: /season/2016/avg
+# EXAMPLE: /main/season/2016/avg
 # -> Get the AVG of total stats for each team in 2016-2017 season,
 # -> ordered by Total Points (TP) (DEFAULT SORTING)
 #
@@ -35,14 +35,35 @@ def games_average(begin_year, conference=None):
 
 
 # Get the SUM of total stats for each team in one season
-# EXAMPLE: /season/2017/sum/east
+# EXAMPLE: /main/season/2017/sum/east
 # -> Get the SUM of total stats for each team in 2017-2018 season,
-# -> ordered by Assist (AST)
+# -> only for eastern conference teams
 #
 @season_stats_api.route('/<int:begin_year>/sum', methods=['GET'])
 @season_stats_api.route('/<int:begin_year>/sum/<string:conference>', methods=['GET'])
 def games_sum(begin_year, conference=None):
     return _season_team_aggregate(begin_year, conference, method='SUM')
+
+
+# Get the global stats average
+@season_stats_api.route('/<int:begin_year>/global_average', methods=['GET'])
+def global_average(begin_year):
+    conn = engine.connect()
+
+    s = text(main_req)
+    df = pd.read_sql(s, conn, params={
+        'beginYear': begin_year,
+        'beginMonth': season_start_month,
+        'endYear': begin_year + 1,
+        'endMonth': season_end_month
+    })
+
+    df = df[desired_columns]
+    df = df.drop(columns=team_columns)
+
+    df = df.mean()
+
+    return jsonify(df.to_json())
 
 
 def _season_team_aggregate(begin_year, conference, method='SUM'):
@@ -78,4 +99,5 @@ def _season_team_aggregate(begin_year, conference, method='SUM'):
     print(df)
 
     json = df.to_json(orient='records')
+    conn.close()
     return jsonify(json)
