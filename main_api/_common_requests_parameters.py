@@ -26,12 +26,12 @@ base_game_request = 'SELECT Games.Date, Games.Duration, Games.Win, Team.FullName
                 'JOIN GameLocationTypes ON Games.GameLocationTypeId = GameLocationTypes.Id '
 
 # Filter game results to an one season result
-season_filter = ' WHERE ((YEAR(Games.Date) = :beginYear AND MONTH(Games.Date) >= :beginMonth) \
+season_filter = ' ((YEAR(Games.Date) = :beginYear AND MONTH(Games.Date) >= :beginMonth) \
                 OR (YEAR(Games.Date) = :endYear AND MONTH(Games.Date) <= :endMonth)) ' \
                 'AND GameTypes.Type = \'Regular Season\' '
 
 # Basic sorting for all games stats results
-sorting = ' ORDER BY Team.Id, Games.Date '
+sorting = ' ORDER BY Team.FullName, Games.Date '
 
 
 # Season parameters
