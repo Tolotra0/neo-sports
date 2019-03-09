@@ -37,3 +37,7 @@ sorting = ' ORDER BY Team.FullName, Games.Date '
 # Season parameters
 season_start_month = 10
 season_end_month = 4
+
+# Stats used for data visualization
+visualization_columns = ['FGM', 'FGA', 'TPM', 'TPA', 'FTM', 'FTA', 'OREB',
+                         'DREB', 'AST', 'TOV', 'STL', 'BLK', 'TF', 'PTS']

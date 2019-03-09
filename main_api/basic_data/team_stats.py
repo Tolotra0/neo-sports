@@ -71,9 +71,7 @@ def _games_resume(team, season_begin_year=None):
 
     print(df)
 
-    json = df.to_json(orient='records')
-
-    return jsonify(json)
+    return jsonify(df.to_dict(orient='records'))
 
 
 def _game_stats_average(team, season_begin_year=None):
@@ -91,4 +89,4 @@ def _game_stats_average(team, season_begin_year=None):
 
     print(df)
 
-    return jsonify(df.to_json(orient='records'))
+    return jsonify(df.to_dict(orient='records'))

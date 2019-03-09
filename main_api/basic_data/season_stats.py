@@ -6,7 +6,7 @@ from flask import Blueprint, jsonify
 from models.db_engine import engine
 
 import pandas as pd
-from main_api._dataframes import get_games_stats
+from main_api._dataframes import get_games_stats, get_all_teams_stats_aggregation
 
 
 season_stats_api = Blueprint('season_stats_api', __name__)
@@ -47,33 +47,14 @@ def global_average(season_begin_year):
 
     df = df[desired_columns]
     df = df.drop(columns=team_columns)
-
     df = df.mean()
 
     print(df)
 
-    return jsonify(df.to_json())
+    return jsonify(df.to_dict())
 
 
-def _season_team_aggregate(season_begin_year, conference, method='SUM'):
-    conn = engine.connect()
-
-    df = get_games_stats(season_begin_year=season_begin_year)
-
-    if conference is not None:
-        df = get_games_stats(season_begin_year=season_begin_year, conference=conference)
-
-    df = df[desired_columns]
-
-    if method == 'SUM':
-        df = pd.DataFrame(df.groupby(by=team_columns, as_index=False).sum())
-    elif method == 'MEAN':
-        df = pd.DataFrame(df.groupby(by=team_columns, as_index=False).mean())
-
-    df = df.sort_values(by=['PTS'], ascending=False)
-
+def _season_team_aggregate(season_begin_year, conference, method='MEAN'):
+    df = get_all_teams_stats_aggregation(season_begin_year, conference=conference, method=method)
     print(df)
-
-    json = df.to_json(orient='records')
-    conn.close()
-    return jsonify(json)
+    return jsonify(df.to_dict(orient='records'))

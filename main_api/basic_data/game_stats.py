@@ -29,8 +29,7 @@ def get_all():
 def teams(team, year=None, month=None, day=None):
     df = get_games_stats(team=team, year=year, month=month, day=day)
     print(df)
-    json = df.to_json(orient='records')
-    return jsonify(json)
+    return jsonify(df.to_dict(orient='records'))
 
 
 # EXAMPLES:
@@ -44,5 +43,4 @@ def teams(team, year=None, month=None, day=None):
 def season(season_begin_year, team=None):
     df = get_games_stats(season_begin_year=season_begin_year, team=team)
     print(df)
-    json = df.to_json(orient='records')
-    return jsonify(json)
+    return jsonify(df.to_dict(orient='records'))
