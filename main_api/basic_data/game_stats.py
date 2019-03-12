@@ -19,7 +19,7 @@ def get_all():
     return jsonify(json)
 
 
-# EXAMPLE: /main/games/team/CLE/2016/12/25
+# EXAMPLE: /-team/CLE/2016/12/25
 # -> CLE game for 25 December 2016
 #
 @game_stats_api.route('/team/<string:team>', methods=['GET'])

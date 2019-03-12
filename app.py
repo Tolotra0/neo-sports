@@ -11,8 +11,10 @@ from main_api.basic_data.globals import globals_api
 from main_api.ml_techniques.clustering import clustering_api
 from main_api.ml_techniques.visualization import visualization_api
 
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)
 
 main_api_url = '/api/main'
 mobile_api_url = '/api/mobile'
