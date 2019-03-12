@@ -29,16 +29,18 @@ def games_average(season_begin_year, conference=None):
     return _season_team_aggregate(season_begin_year, conference, method='MEAN')
 
 
+# MULTIPLE SEASON STATS
 @season_stats_api.route('/<int:season_begin_year>/to/<int:season_begin_year2>/avg', methods=['GET'])
 @season_stats_api.route('/<int:season_begin_year>/to/<int:season_begin_year2>/avg/<string:conference>', methods=['GET'])
 def multiple_games_average(season_begin_year, season_begin_year2, conference=None):
     dataframes = []
-    for date in range(season_begin_year, season_begin_year2+1):
-        df = get_all_teams_stats_aggregation(season_begin_year, conference=conference, method='MEAN')
-        dataframes.append({
-            'season': '{}-{}'.format(date, date + 1),
-            'data': df.to_dict(orient='records')
-        })
+    for year in range(season_begin_year, season_begin_year2+1):
+        df = get_all_teams_stats_aggregation(year, conference=conference, method='MEAN')
+        if not df.empty:
+            dataframes.append({
+                'season': '{}-{}'.format(year, year + 1),
+                'data': df.to_dict(orient='records')
+            })
     return jsonify(dataframes)
 
 
