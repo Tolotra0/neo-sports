@@ -43,19 +43,4 @@ def teams_clustering(k=4, season_begin_year=None, conference=None):
     kmeans.fit(points_2d)
     cluster_labels = kmeans.labels_
 
-    #####
-    X = points_2d[:, 0]
-    Y = points_2d[:, 1]
-
-    plt.title('NBA 2017-2018 Teams Performance')
-
-    colors = ['purple', 'red', 'black', 'blue', 'green', 'orange', 'cyan', 'indigo']
-
-    for i, team in enumerate(teams):
-        plt.scatter(X[i], Y[i], c=colors[cluster_labels[i]])
-        plt.annotate(team, [X[i], Y[i]], fontsize=8)
-
-    plt.show()
-    #####
-
     return jsonify(teams.tolist(), points_2d.tolist(), cluster_labels.tolist())
