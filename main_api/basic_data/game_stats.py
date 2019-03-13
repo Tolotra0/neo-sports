@@ -15,8 +15,7 @@ game_stats_api = Blueprint('game_stats_api', __name__)
 def get_all():
     df = get_games_stats()
     print(df)
-    json = df.to_json(orient='records')
-    return jsonify(json)
+    return jsonify(df.to_dict(orient='records'))
 
 
 # EXAMPLE: /-team/CLE/2016/12/25
