@@ -18,7 +18,7 @@ def get_all():
     return jsonify(df.to_dict(orient='records'))
 
 
-# EXAMPLE: /api/main/team/CLE/2016/12/25
+# EXAMPLE: /api/main/games/team/CLE/2016/12/25
 # -> CLE game for 25 December 2016
 #
 @game_stats_api.route('/team/<string:team>', methods=['GET'])
