@@ -40,9 +40,40 @@ def application():
 # -----------------
 
 from _cmd_tools.game_csv_to_db import game_csv_to_db
+from _cmd_tools.players_csv_to_db import players_csv_to_db
 
 
-@app.cli.command('game_csv_to_db')
+@app.cli.command('game-csv-to-db')
 @click.option('--path')
 def to_db_1(path):
     game_csv_to_db(path)
+
+
+# EXAMPLE - In terminal, type:
+# > flask players-csv-to-db --path='_csv_files/players_playoffs/2017-18.csv' --game-type='Playoffs' --year=2017
+@app.cli.command('players-csv-to-db')
+@click.option('--path')
+@click.option('--year')
+@click.option('--game-type')
+def to_db_2(path, year, game_type):
+    if year is None:
+        print('ERROR: You must specify a season begin year with --year option.')
+        return
+
+    try:
+        year = int(year)
+    except Exception:
+        print('ERROR: Invalid year value.')
+        return
+
+    types = ['Regular Season', 'Playoffs']
+
+    if not any([game_type == type for type in types]):
+        print('ERROR: Invalid game types. You shoud choose between ', types)
+        return
+
+    for i, type in enumerate(types):
+        if type == game_type:
+            game_type = i + 1
+
+    players_csv_to_db(path, year, game_type)

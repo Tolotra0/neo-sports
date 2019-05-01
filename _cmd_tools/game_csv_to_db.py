@@ -15,8 +15,6 @@ Session = sessionmaker(bind=engine)
 # And all these columns doesn't contain strings
 
 def game_csv_to_db(csv_file_path):
-    print('')
-
     df = pd.read_csv(csv_file_path)
     df['DREB'] = df['TREB'] - df['OREB']
 
