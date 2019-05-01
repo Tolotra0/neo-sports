@@ -99,6 +99,7 @@ class Player(Base):
     __tablename__ = 'Players'
 
     Id = Column(INTEGER(16), primary_key=True)
+    Year = Column(INTEGER(4), nullable=False)
     Name = Column(String(255), nullable=False)
     Age = Column(INTEGER(4), nullable=False)
     Height = Column(Float)
@@ -113,28 +114,36 @@ class Player(Base):
     Team = relationship('Team')
 
 
-class PlayerGameStat(Base):
-    __tablename__ = 'PlayerGameStats'
+class PlayerStat(Base):
+    __tablename__ = 'PlayerStats'
 
     Id = Column(INTEGER(16), primary_key=True)
-    GameId = Column(ForeignKey('Games.Id'), nullable=False, index=True)
     PlayerId = Column(ForeignKey('Players.Id'), nullable=False, index=True)
-    FGM = Column(INTEGER(10))
-    FGA = Column(INTEGER(10))
-    TPM = Column(INTEGER(10))
-    TPA = Column(INTEGER(10))
-    FTM = Column(INTEGER(10))
-    FTA = Column(INTEGER(10))
-    OREB = Column(INTEGER(10))
-    DREB = Column(INTEGER(10))
-    AST = Column(INTEGER(10))
-    TOV = Column(INTEGER(10))
-    STL = Column(INTEGER(10))
-    BLK = Column(INTEGER(10))
-    TF = Column(INTEGER(10))
-    PTS = Column(INTEGER(10))
+    GameTypeId = Column(ForeignKey('GameTypes.Id'), nullable=False, index=True)
+    GP = Column(INTEGER(10), nullable=False)
+    W = Column(INTEGER(10), nullable=False)
+    L = Column(INTEGER(10), nullable=False)
+    MIN = Column(Float, nullable=False)
+    FGM = Column(Float)
+    FGA = Column(Float)
+    TPM = Column(Float)
+    TPA = Column(Float)
+    FTM = Column(Float)
+    FTA = Column(Float)
+    OREB = Column(Float)
+    DREB = Column(Float)
+    AST = Column(Float)
+    TOV = Column(Float)
+    STL = Column(Float)
+    BLK = Column(Float)
+    PF = Column(Float)
+    FP = Column(Float)
+    PTS = Column(Float)
+    DD2 = Column(INTEGER(10), nullable=False)
+    TD3 = Column(INTEGER(10), nullable=False)
+    PlusMinus = Column(Float)
 
-    Game = relationship('Game')
+    GameType = relationship('GameType')
     Player = relationship('Player')
 
 
