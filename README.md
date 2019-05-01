@@ -121,6 +121,25 @@ To get **teams clustering** based on multiple parameters:
     
 - **K** is the number of clusters.
 
+<br>
+
+## MORE
+The project also contain a commandline tool for adding new **structured and uniform csv** files in the database.
+See the files in the **_csv_files** folder for example.
+
+### Adding games stats in the database
+
+    $ flask game-csv-to-db --path=<csv_file_path>
+    
+- **csv_file_path** is the path to the csv file.
+    
+### Adding player stats in the database
+
+    $ flask players-csv-to-db --path=<csv_file_path> --game-type=<game_type> --year=<season_begin_year>
+    
+- **game_type:** `'Regular Season'` or `'Playoffs'`
+- **season_begin_year:** The `season_begin_year - season_begin_year + 1` season.
+
 <br><br>
 
 _If you encounters any errors in the API or in the documentation please send a report, I'm an human being :)_
