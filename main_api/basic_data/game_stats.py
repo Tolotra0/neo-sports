@@ -18,7 +18,7 @@ def get_all():
     return jsonify(df.to_dict(orient='records'))
 
 
-# EXAMPLE: /-team/CLE/2016/12/25
+# EXAMPLE: /api/main/team/CLE/2016/12/25
 # -> CLE game for 25 December 2016
 #
 @game_stats_api.route('/team/<string:team>', methods=['GET'])
@@ -32,9 +32,9 @@ def teams(team, year=None, month=None, day=None):
 
 
 # EXAMPLES:
-# /main/games/season/2017
+# /api/main/games/season/2017
 # -> 2017-2018 season's games
-# /main/games/season/2017/TOR
+# /api/main/games/season/2017/TOR
 # -> 2017-2018 season's games for Toronto Raptors
 #
 @game_stats_api.route('/season/<int:season_begin_year>', methods=['GET'])
