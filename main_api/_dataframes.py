@@ -12,11 +12,6 @@ from main_api._common_requests_parameters import base_game_request, \
     season_start_month, season_end_month, season_filter, sorting, player_request
 
 
-team_filter = ' Team.ShortName = :team '
-year_filter = ' YEAR(Games.Date) = :year '
-month_filter = ' MONTH(Games.Date) = :month '
-day_filter = ' DAY(Games.Date) = :day '
-conference_filter = ' TeamConf.Name = :conference '
 _and_ = ' AND '
 _where_ = ' WHERE '
 
@@ -36,29 +31,22 @@ def get_games_stats(season_begin_year=None, conference=None, team=None, year=Non
     if all([v is not None for v in [conference, team]]):
         return 'ERROR - get_games_stats(): Useless parameters combination => conference and team.'
 
-    parameters = [season_begin_year, conference, team, year, month, day]
-    parameters_keys = ['season', 'conference', 'team', 'year', 'month', 'day']
-    add_parameters = [p is not None for p in parameters]
-    filters = [season_filter, conference_filter, team_filter, year_filter, month_filter, day_filter]
-
     request = base_game_request
-    init_request = request
-    request_parameters = {}
 
-    for i, add in enumerate(add_parameters):
-        if add:
-            if i == 0:
-                request_parameters['beginYear'] = season_begin_year
-                request_parameters['beginMonth'] = season_start_month
-                request_parameters['endYear'] = season_begin_year + 1
-                request_parameters['endMonth'] = season_end_month
-            else:
-                request_parameters[parameters_keys[i]] = parameters[i]
+    request_parameters = {
+        'conference': conference,
+        'team': team,
+        'year': year,
+        'month': month,
+        'day': day
+    }
 
-            if request == init_request:
-                request = request + _where_ + filters[i]
-            else:
-                request = request + _and_ + filters[i]
+    if season_begin_year is not None:
+        request = request + _and_ + season_filter
+        request_parameters['beginYear'] = season_begin_year
+        request_parameters['beginMonth'] = season_start_month
+        request_parameters['endYear'] = season_begin_year + 1
+        request_parameters['endMonth'] = season_end_month
 
     conn = engine.connect()
 

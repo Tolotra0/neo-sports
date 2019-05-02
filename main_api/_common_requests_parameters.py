@@ -23,12 +23,17 @@ base_game_request = 'SELECT Games.Date, Games.Duration, Games.Win, Team.FullName
                 \
                 'JOIN TeamGameStats ON Games.Id = TeamGameStats.GameId '\
                 'JOIN GameTypes ON Games.GameTypeId = GameTypes.Id '\
-                'JOIN GameLocationTypes ON Games.GameLocationTypeId = GameLocationTypes.Id '
+                'JOIN GameLocationTypes ON Games.GameLocationTypeId = GameLocationTypes.Id ' \
+                    '' \
+                    'WHERE (ISNULL(:team) OR Team.ShortName = :team) ' \
+                    'AND (ISNULL(:year) OR YEAR(Games.Date) = :year) ' \
+                    'AND (ISNULL(:month) OR MONTH(Games.Date) = :month) ' \
+                    'AND (ISNULL(:day) OR DAY(Games.Date) = :day) ' \
+                    'AND (ISNULL(:conference) OR TeamConf.Name = :conference) ' \
 
 # Filter game results to an one season result
 season_filter = ' ((YEAR(Games.Date) = :beginYear AND MONTH(Games.Date) >= :beginMonth) \
-                OR (YEAR(Games.Date) = :endYear AND MONTH(Games.Date) <= :endMonth)) ' \
-                'AND GameTypes.Type = \'Regular Season\' '
+                OR (YEAR(Games.Date) = :endYear AND MONTH(Games.Date) <= :endMonth)) '
 
 # Basic sorting for all games stats results
 sorting = ' ORDER BY Team.FullName, Games.Date '
@@ -36,7 +41,7 @@ sorting = ' ORDER BY Team.FullName, Games.Date '
 
 # Season parameters
 season_start_month = 10
-season_end_month = 4
+season_end_month = 8
 
 # Stats used for data visualization
 visualization_columns = ['FGM', 'FGA', 'TPM', 'TPA', 'FTM', 'FTA', 'OREB',
