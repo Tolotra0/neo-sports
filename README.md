@@ -125,9 +125,17 @@ Getting players **by team**:
 ##### Visualization
 API for getting data visualizations like points, charts, polars and so on ...
 
-For **teams visualization with points**:
+For **teams point visualization**:
 
     /api/main/visualization/points/teams[/<SEASON_BEGIN_YEAR>/<CONFERENCE>]
+    
+For **players point visualization** by team:
+
+    /api/main/visualization/points/players/team/<TEAM>/<SEASON_BEGIN_YEAR>
+    
+For **players point visualization** by season:
+
+    /api/main/visualization/points/players/season/<SEASON_BEGIN_YEAR>
     
 <br>
 
@@ -139,6 +147,14 @@ To get **teams clustering** based on multiple parameters:
     /api/main/clustering/teams/<K>[/<SEASON_BEGIN_YEAR>/<CONFERENCE>]
     
 - **K** is the number of clusters.
+
+For **players clustering** for one team:
+
+    /api/main/clustering/players/<K>/team/<TEAM>/<SEASON_BEGIN_YEAR>
+    
+For **players clustering** in one season:
+
+    /api/main/clustering/players/<K>/season/<SEASON_BEGIN_YEAR>
 
 <br>
 

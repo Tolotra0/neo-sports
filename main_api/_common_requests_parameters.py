@@ -65,4 +65,10 @@ player_request = 'SELECT Players.*, Teams.*, PlayerStats.*, GameTypes.Type ' \
                  'AND ( ISNULL(:team) OR Teams.ShortName = :team ) ' \
                  'AND ( ISNULL(:game_type) OR INSTR(GameTypes.Type, :game_type) ) ' \
                  '' \
-                 'ORDER BY Players.Name, Players.Year'
+                 'ORDER BY Players.Year, Players.Name'
+
+# Stats used for player data visualization
+player_visualization_columns = ['Age', 'GP', 'W', 'L', 'MIN',
+                                'FGM', 'FGA', 'TPM', 'TPA', 'FTM', 'FTA', 'OREB',
+                                'DREB', 'AST', 'TOV', 'STL', 'BLK', 'PF', 'FP', 'PTS',
+                                'DD2', 'TD3']

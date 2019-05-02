@@ -8,8 +8,8 @@ from sklearn.decomposition import PCA
 from sklearn.cluster import KMeans
 import matplotlib.pyplot as plt
 
-from main_api._dataframes import get_all_teams_stats_aggregation
-from main_api._common_requests_parameters import visualization_columns
+from main_api._dataframes import get_all_teams_stats_aggregation, get_players
+from main_api._common_requests_parameters import visualization_columns, player_visualization_columns
 
 
 clustering_api = Blueprint('clustering_api', __name__)
@@ -44,3 +44,53 @@ def teams_clustering(k=4, season_begin_year=None, conference=None):
     cluster_labels = kmeans.labels_
 
     return jsonify(teams.tolist(), points_2d.tolist(), cluster_labels.tolist())
+
+
+# API for getting PLAYERS CLUSTERING
+# FOR A TEAM
+@clustering_api.route('/players/<int:k>/team/<team>/<int:season_begin_year>', methods=['GET'])
+def team_players(k, team, season_begin_year):
+    df = get_players(team=team, year=season_begin_year, game_type='regular')
+
+    if df.empty:
+        return jsonify(None)
+
+    print(df)
+
+    names = df['Name']
+
+    df = df[player_visualization_columns]
+    pca = PCA(n_components=2)
+    pca.fit(df)
+    points_2d = pca.transform(df)
+
+    kmeans = KMeans(n_clusters=k)
+    kmeans.fit(points_2d)
+    cluster_labels = kmeans.labels_
+
+    return jsonify(names.tolist(), points_2d.tolist(), cluster_labels.tolist())
+
+
+# API for getting PLAYERS CLUSTERING
+# FOR A SEASON
+@clustering_api.route('players/<int:k>/season/<int:season_begin_year>', methods=['GET'])
+def season_players(k, season_begin_year):
+    df = get_players(year=season_begin_year, game_type='regular')
+
+    if df.empty:
+        return jsonify(None)
+
+    print(df)
+
+    names = df['Name']
+
+    df = df[player_visualization_columns]
+    pca = PCA(n_components=2)
+    pca.fit(df)
+    points_2d = pca.transform(df)
+
+    kmeans = KMeans(n_clusters=k)
+    kmeans.fit(points_2d)
+    cluster_labels = kmeans.labels_
+
+    return jsonify(names.tolist(), points_2d.tolist(), cluster_labels.tolist())
