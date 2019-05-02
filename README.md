@@ -101,6 +101,25 @@ Season games stats average for a team:
     
 <br>
 
+##### Players stats
+Getting ALL the players stats (alltime):
+
+    /api/main/players/ or /api/main/players/all
+    
+Getting players **by name**:
+
+    /api/main/players/name/<NAME>[/<TEAM>/<YEAR>]
+    
+- **NAME** is a string that is contained in the player's full name.
+
+Getting players **by team**:
+
+    /api/main/players/team/<TEAM>[/<YEAR>/<GAME_TYPE>]
+    
+- **GAME_TYPE** is `regular` or `playoffs`
+
+<br>
+
 #### Machine Learning API
 
 ##### Visualization
