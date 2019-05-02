@@ -6,6 +6,7 @@ from main_api.basic_data.accounts import accounts_api
 from main_api.basic_data.game_stats import game_stats_api
 from main_api.basic_data.season_stats import season_stats_api
 from main_api.basic_data.team_stats import team_stats_api
+from main_api.basic_data.players_stats import players_stats_api
 from main_api.basic_data.globals import globals_api
 
 from main_api.ml_techniques.clustering import clustering_api
@@ -24,6 +25,7 @@ app.register_blueprint(accounts_api, url_prefix=main_api_url+'/accounts')
 app.register_blueprint(game_stats_api, url_prefix=main_api_url+'/games')
 app.register_blueprint(season_stats_api, url_prefix=main_api_url+'/season')
 app.register_blueprint(team_stats_api, url_prefix=main_api_url+'/team')
+app.register_blueprint(players_stats_api, url_prefix=main_api_url+'/players')
 app.register_blueprint(globals_api, url_prefix=main_api_url+'/globals')
 # main API Blueprints / Machine Learning API
 app.register_blueprint(visualization_api, url_prefix=main_api_url+'/visualization')

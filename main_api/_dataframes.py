@@ -9,7 +9,7 @@ from models.db_engine import engine
 from sqlalchemy.sql import text
 
 from main_api._common_requests_parameters import base_game_request, \
-    season_start_month, season_end_month, season_filter, sorting
+    season_start_month, season_end_month, season_filter, sorting, player_request
 
 
 team_filter = ' Team.ShortName = :team '
@@ -103,4 +103,23 @@ def get_one_team_stats_aggregation(team, season_begin_year=None, method='MEAN'):
 
     df = df.sort_values(by=['PTS'], ascending=False)
 
+    return df
+
+
+#
+# PLAYERS DATA
+#
+
+def get_players(name=None, year=None, age=None, position=None, team=None, game_type=None):
+    conn = engine.connect()
+
+    df = pd.read_sql(text(player_request), conn, params={
+        'name': name,
+        'year': year,
+        'age': age,
+        'team': team,
+        'game_type': game_type
+    })
+
+    conn.close()
     return df

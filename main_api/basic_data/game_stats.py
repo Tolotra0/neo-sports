@@ -1,6 +1,6 @@
 #
 # API for getting GAMES statistics
-# Stats given here are for ONE team
+# Each row is for ONE team
 #
 
 from flask import Blueprint, jsonify

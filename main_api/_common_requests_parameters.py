@@ -41,3 +41,23 @@ season_end_month = 4
 # Stats used for data visualization
 visualization_columns = ['FGM', 'FGA', 'TPM', 'TPA', 'FTM', 'FTA', 'OREB',
                          'DREB', 'AST', 'TOV', 'STL', 'BLK', 'TF', 'PTS']
+
+
+# Requests for fetching players
+#
+# Columns fetched are
+player_request = 'SELECT Players.*, Teams.*, PlayerStats.*, GameTypes.Type ' \
+                 'FROM Players ' \
+                 \
+                 'JOIN PlayerStats JOIN GameTypes ' \
+                 'ON PlayerStats.PlayerId = Players.Id AND PlayerStats.GameTypeId = GameTypes.Id ' \
+                 \
+                 'JOIN Teams on Teams.Id = Players.TeamId ' \
+                 \
+                 'WHERE ( ISNULL(:name) OR INSTR(Players.Name, :name) ) ' \
+                 'AND ( ISNULL(:year) OR Players.Year = :year ) ' \
+                 'AND ( ISNULL(:age) OR Players.Age = :age ) ' \
+                 'AND ( ISNULL(:team) OR Teams.ShortName = :team ) ' \
+                 'AND ( ISNULL(:game_type) OR INSTR(GameTypes.Type, :game_type) ) ' \
+                 '' \
+                 'ORDER BY Players.Name, Players.Year'
