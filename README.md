@@ -140,6 +140,10 @@ Getting players **by team**:
     
 - **GAME_TYPE** is `regular` or `playoffs`
 
+Getting players **by id**, a player id means one player, during one season and for one game type (playoffs or regular season):
+
+    /api/main/players/id/<PLAYER_ID>
+
 <br>
 
 #### Machine Learning API

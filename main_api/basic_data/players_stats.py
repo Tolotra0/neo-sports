@@ -36,3 +36,11 @@ def players_by_team(team, year=None, game_type=None):
     df = get_players(team=team, year=year, game_type=game_type)
     print(df)
     return jsonify(df.to_dict(orient='records'))
+
+
+# Getting players by ID
+@players_stats_api.route('/id/<int:id>', methods=['GET'])
+def players_by_id(id):
+    df = get_players(id=id)
+    print(df)
+    return jsonify(df.to_dict(orient='records'))

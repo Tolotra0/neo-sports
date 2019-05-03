@@ -51,7 +51,9 @@ visualization_columns = ['FGM', 'FGA', 'TPM', 'TPA', 'FTM', 'FTA', 'OREB',
 # Requests for fetching players
 #
 # Columns fetched are
-player_request = 'SELECT Players.*, Teams.*, PlayerStats.*, GameTypes.Type ' \
+player_request = 'SELECT Players.Year, Players.Name, Players.Age, ' \
+                 'Teams.Id AS TeamId, Teams.FullName AS TeamFullName, Teams.ShortName AS TeamAbbr, ' \
+                 'PlayerStats.*, GameTypes.Type AS GameType ' \
                  'FROM Players ' \
                  \
                  'JOIN PlayerStats JOIN GameTypes ' \
@@ -64,7 +66,7 @@ player_request = 'SELECT Players.*, Teams.*, PlayerStats.*, GameTypes.Type ' \
                  'AND ( ISNULL(:age) OR Players.Age = :age ) ' \
                  'AND ( ISNULL(:team) OR Teams.ShortName = :team ) ' \
                  'AND ( ISNULL(:game_type) OR INSTR(GameTypes.Type, :game_type) ) ' \
-                 '' \
+                 'AND ( ISNULL(:id) OR Players.Id = :id )' \
                  'ORDER BY Players.Year, Players.Name'
 
 # Stats used for player data visualization

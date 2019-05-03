@@ -98,7 +98,7 @@ def get_one_team_stats_aggregation(team, season_begin_year=None, method='MEAN'):
 # PLAYERS DATA
 #
 
-def get_players(name=None, year=None, age=None, position=None, team=None, game_type=None):
+def get_players(name=None, year=None, age=None, position=None, team=None, game_type=None, id=None):
     conn = engine.connect()
 
     df = pd.read_sql(text(player_request), conn, params={
@@ -106,7 +106,8 @@ def get_players(name=None, year=None, age=None, position=None, team=None, game_t
         'year': year,
         'age': age,
         'team': team,
-        'game_type': game_type
+        'game_type': game_type,
+        'id': id
     })
 
     conn.close()
