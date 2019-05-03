@@ -42,7 +42,10 @@ def teams_clustering(k=4, season_begin_year=None, conference=None):
     kmeans.fit(points_2d)
     cluster_labels = kmeans.labels_
 
-    return jsonify(teams.tolist(), points_2d.tolist(), cluster_labels.tolist())
+    points_2d = points_2d.tolist()
+    points = [{'x': point[0], 'y': point[1]} for index, point in enumerate(points_2d)]
+
+    return jsonify(teams.tolist(), points, cluster_labels.tolist())
 
 
 # API for getting PLAYERS CLUSTERING
