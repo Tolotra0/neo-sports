@@ -22,6 +22,27 @@ Also, this project uses a **MariaDB** (or MySQL) database, so install it.
 The database file are stored in the **_db_backups** folder.
 And the last named file is the most recent file.
 
+### Running the project
+To run the project, simply run the flask app in the terminal.
+Assuming that your python environment with installed packages are ready and activated:
+
+    $ flask run
+    
+To set project settings, run this command syntax before the `flask run`:
+
+    $ export PARAMETER_NAME=VALUE
+    
+Or in Windows systems:
+
+    > set PARAMETER_NAME=VALUE
+    
+Some possible parameters are:
+- **FLASK_APP** is the application entry point, defaults to `app.py` when not specified.
+- **FLASK_ENV:** Possible values are `development` or `production`. 
+Use the development mode for realtime project changes when modifying your code.
+
+<br>
+
 ## API Documentation
 
 ### Main API
@@ -157,6 +178,21 @@ For **players clustering** in one season:
     /api/main/clustering/players/<K>/season/<SEASON_BEGIN_YEAR>
 
 <br>
+
+### MOBILE API
+API for sending data with the mobile application.
+
+To send game data and stats use a **POST REQUEST** at this route:
+
+    /api/mobile/add_game
+    
+The keys are:
+- **Team:** that contains teams name abbreviation like `hou, tor, cle, mil, gsw,...`
+- **Opponent:** like the above.
+- **Date:** the date of the game, in `year-month-day` format.
+- **GameLocationType:** `away` or `home`.
+- **Win:** `1` for a win and `0` for a lose (respectively for the `Team`, not for the opponent).
+- PTS, FGM, FGA, TPM, TPA, FTM, FTA, OREB, DREB, AST, STL, BLK, TOV, TF.
 
 ## MORE
 The project also contain a commandline tool for adding new **structured and uniform csv** files in the database.
