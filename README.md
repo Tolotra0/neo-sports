@@ -121,6 +121,18 @@ Season games stats average for a team:
 
     /api/main/team/<TEAM_ABBR>/<SEASON_BEGIN_YEAR>/games_stats_avg
     
+Team points per date in a season:
+
+    /api/main/team/<TEAM_ABBR>/<SEASON_BEGIN_YEAR>/points_per_date
+    
+Team win lose in a season:
+
+    /api/main/team/<TEAM_ABBR>/<SEASON_BEGIN_YEAR>/win_lose
+    
+FOR A TEAM SEASON FULL STATS:
+
+    /api/main/team/<TEAM_ABBR>/<SEASON_BEGIN_YEAR>/full_stats
+    
 <br>
 
 ##### Players stats
@@ -181,6 +193,17 @@ For **players clustering** for one team:
 For **players clustering** in one season:
 
     /api/main/clustering/players/<K>/season/<SEASON_BEGIN_YEAR>
+
+<br>
+
+#### SIMPLE BUT USEFULL DATAS
+For getting all teams list:
+
+    /api/main/globals/teams/list
+    
+For getting one team information:
+
+    /api/main/globals/teams/info/<TEAM>
 
 <br>
 

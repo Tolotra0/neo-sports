@@ -112,3 +112,39 @@ def get_players(name=None, year=None, age=None, position=None, team=None, game_t
 
     conn.close()
     return df
+
+
+#
+# TEAMS DATA
+#
+# Team information
+def get_team_info(team):
+    conn = engine.connect()
+
+    request = 'SELECT Teams.*, Cities.Name AS City, Divisions.Name AS Division, Conferences.Name AS Conference ' \
+              'FROM Teams JOIN Cities JOIN Divisions JOIN Conferences ' \
+              'ON Teams.CityId = Cities.Id AND Cities.DivisionId = Divisions.Id ' \
+              'AND Divisions.ConferenceId = Conferences.Id ' \
+              'WHERE Teams.ShortName = :team OR Teams.ShortNameAlt = :team '
+
+    df = pd.read_sql(text(request), conn, params={'team': team})
+
+    return df
+
+
+# Team points per date for one season
+def get_team_points_per_date(team, season):
+    df = get_games_stats(season_begin_year=season, team=team)
+    df = df[['Date', 'PTS']]
+    return df
+
+
+# Team win and lose in a season
+def get_team_win_lose(team, season):
+    df = get_games_stats(season_begin_year=season, team=team)
+    df = df[['TeamFullName', 'TeamShortName', 'Win']]
+    total = len(df)
+    df = df.groupby(by=['TeamShortName', 'TeamFullName'], as_index=False).sum()
+    df['Lose'] = total - df['Win']
+
+    return pd.DataFrame(df)

@@ -7,10 +7,14 @@ from flask import Blueprint, jsonify
 from models.db_engine import engine
 from sqlalchemy.sql import text
 
+from main_api._dataframes import get_team_info
+
+
 globals_api = Blueprint('globals_api', __name__)
 
 
-@globals_api.route('/teams_list', methods=['GET'])
+# List of all teams
+@globals_api.route('/teams/list', methods=['GET'])
 def teams_list():
     conn = engine.connect()
 
@@ -19,3 +23,12 @@ def teams_list():
     conn.close()
 
     return jsonify([dict(row) for row in result])
+
+
+# Getting one team information
+@globals_api.route('/teams/info/<team>')
+def team_info(team):
+    df = get_team_info(team)
+    df = df.to_dict(orient='records')
+    print(df[0])
+    return jsonify(df[0])
