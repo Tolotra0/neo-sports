@@ -6,7 +6,6 @@
 from flask import Blueprint, jsonify
 from sklearn.decomposition import PCA
 from sklearn.cluster import KMeans
-import matplotlib.pyplot as plt
 
 from main_api._dataframes import get_all_teams_stats_aggregation, get_players
 from main_api._common_requests_parameters import visualization_columns, player_visualization_columns

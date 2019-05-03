@@ -13,7 +13,7 @@ We mainly recommend a **Conda environment**.
 - scikit-learn==0.20.1
 - flask-cors==3.0.7
 
-Theses packages aren't required in production mode but required in development:
+Theses packages **aren't really required** in production mode but may be required in development:
 
 - matplotlib==3.0.2
 - sqlacodegen==2.0.1
@@ -21,6 +21,7 @@ Theses packages aren't required in production mode but required in development:
 Also, this project uses a **MariaDB** (or MySQL) database, so install it.
 The database file are stored in the **_db_backups** folder.
 And the last named file is the most recent file.
+So make a **database import** in a database named `'nsdb'`.
 
 ### Running the project
 To run the project, simply run the flask app in the terminal.
