@@ -148,3 +148,23 @@ def get_team_win_lose(team, season):
     df['Lose'] = total - df['Win']
 
     return pd.DataFrame(df)
+
+
+#
+# UTILITIES
+#
+def better_split_format(dictionary):
+    columns = dictionary['columns']
+    data = dictionary['data']
+    ncol = len(columns)
+    ndata = len(data)
+
+    print(dictionary)
+    result = []
+
+    for i in range(0, ndata):
+        result.append([{'column': columns[j], 'data': data[i][j]} for j in range(0, ncol)])
+
+    if len(result) == 1:
+        return result[0]
+    return result

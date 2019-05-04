@@ -5,7 +5,7 @@
 from flask import Blueprint, jsonify
 import pandas as pd
 from main_api._dataframes import get_games_stats, get_team_info, get_team_points_per_date,\
-    get_team_win_lose, get_one_team_stats_aggregation, get_players
+    get_team_win_lose, get_one_team_stats_aggregation, get_players, better_split_format
 
 
 team_stats_api = Blueprint('team_stats_api', __name__)
@@ -79,10 +79,7 @@ def season_full_stats(team, season_begin_year):
 
     performances = get_one_team_stats_aggregation(team=team, season_begin_year=season_begin_year)
     performances = performances.drop(['TeamFullName', 'TeamShortName'], axis=1)
-    team_info['performances'] = performances.to_dict(orient='split')
-    subjects = team_info['performances']['columns']
-    values = team_info['performances']['data'][0]
-    team_info['performances'] = [{'subject': subjects[i], 'value': values[i]} for i in range(0, len(subjects))]
+    team_info['performances'] = better_split_format(performances.to_dict(orient='split'))
 
     players = get_players(team=team, year=season_begin_year, game_type='regular')
     players = players.drop(['TeamId', 'TeamFullName', 'TeamAbbr', 'Id', 'GameTypeId', 'GameType', 'Year'], axis=1)

@@ -207,6 +207,16 @@ For getting one team information:
 
 <br>
 
+#### NEO-TOOLS
+The most important part of the project. Provides a full-featured data for making better decisions:
+
+**[IN DEVELOPMENT]** A **magic wand** for a team that shows the strengths and weaknesses and multiple useful and complex information. 
+And directly offers solutions like players recommendation, stats improvements, ...
+
+    /api/main/neotools/wand/team/<TEAM>/<SEASON_BEGIN_YEAR>
+
+<br>
+
 ### MOBILE API
 API for sending data with the mobile application.
 
