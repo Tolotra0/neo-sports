@@ -62,6 +62,7 @@ def team_players(k, team, season_begin_year):
     names = df['Name']
 
     df = df[player_visualization_columns]
+    print(df)
     pca = PCA(n_components=2)
     pca.fit(df)
     points_2d = pca.transform(df)
