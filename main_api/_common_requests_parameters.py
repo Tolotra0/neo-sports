@@ -53,13 +53,15 @@ visualization_columns = ['FGM', 'FGA', 'TPM', 'TPA', 'FTM', 'FTA', 'OREB',
 # Columns fetched are
 player_request = 'SELECT Players.Year, Players.Name, Players.Age, ' \
                  'Teams.Id AS TeamId, Teams.FullName AS TeamFullName, Teams.ShortName AS TeamAbbr, ' \
-                 'PlayerStats.*, GameTypes.Type AS GameType ' \
+                 'PlayerStats.*, GameTypes.Type AS GameType, Salaries.Salary ' \
                  'FROM Players ' \
                  \
                  'JOIN PlayerStats JOIN GameTypes ' \
                  'ON PlayerStats.PlayerId = Players.Id AND PlayerStats.GameTypeId = GameTypes.Id ' \
                  \
                  'JOIN Teams on Teams.Id = Players.TeamId ' \
+                 \
+                 'LEFT JOIN Salaries ON Players.Id = Salaries.PlayerId ' \
                  \
                  'WHERE ( ISNULL(:name) OR INSTR(Players.Name, :name) ) ' \
                  'AND ( ISNULL(:year) OR Players.Year = :year ) ' \

@@ -44,3 +44,27 @@ def players_by_id(id):
     df = get_players(id=id)
     print(df)
     return jsonify(df.to_dict(orient='records'))
+
+
+# Getting season full stats
+@players_stats_api.route('/season_stats', methods=['GET'])
+@players_stats_api.route('/season_stats/<int:season_begin_year>', methods=['GET'])
+def season_stats(season_begin_year=None):
+    df = get_players(year=season_begin_year, game_type='regular')
+
+    df = df.drop(['Year', 'GameType', 'Id', 'GameTypeId'], axis=1)
+    top = df.sort_values(by=['PTS', 'Salary'], ascending=False)[0:5]
+
+    print(df)
+
+    data = {
+        'season': season_begin_year,
+        'trends': top.to_dict(orient='records'),
+        'stats': {
+            'age': df['Age'].tolist(),
+            'points': df['PTS'].tolist(),
+            'salary': df['Salary'].tolist()
+        }
+    }
+
+    return jsonify(data)

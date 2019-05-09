@@ -147,6 +147,16 @@ class PlayerStat(Base):
     Player = relationship('Player')
 
 
+class Salary(Base):
+    __tablename__ = 'Salaries'
+
+    Id = Column(INTEGER(16), primary_key=True)
+    PlayerId = Column(ForeignKey('Players.Id'), nullable=False, index=True)
+    Salary = Column(INTEGER(16), nullable=False)
+
+    Player = relationship('Player')
+
+
 class TeamGameStat(Base):
     __tablename__ = 'TeamGameStats'
 

@@ -53,6 +53,7 @@ def application():
 
 from _cmd_tools.game_csv_to_db import game_csv_to_db
 from _cmd_tools.players_csv_to_db import players_csv_to_db
+from _cmd_tools.salaries_csv_to_db import salaries_csv_to_db
 
 
 @app.cli.command('game-csv-to-db')
@@ -89,3 +90,21 @@ def to_db_2(path, year, game_type):
             game_type = i + 1
 
     players_csv_to_db(path, year, game_type)
+
+
+# Player salaries import
+@app.cli.command('players-salary-to-db')
+@click.option('--path')
+@click.option('--year')
+def to_db_3(path, year):
+    if year is None:
+        print('ERROR: You must specify a season begin year with --year option.')
+        return
+
+    try:
+        year = int(year)
+    except Exception:
+        print('ERROR: Invalid year value.')
+        return
+
+    salaries_csv_to_db(path, year)

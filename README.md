@@ -155,6 +155,10 @@ Getting players **by team**:
 Getting players **by id**, a player id means one player, during one season and for one game type (playoffs or regular season):
 
     /api/main/players/id/<PLAYER_ID>
+    
+GETTING PLAYERS SEASON STATS:
+
+    /api/main/players/season_stats/<YEAR>
 
 <br>
 
