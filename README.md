@@ -253,6 +253,10 @@ See the files in the **_csv_files** folder for example.
 - **game_type:** `'Regular Season'` or `'Playoffs'`
 - **season_begin_year:** The `season_begin_year - season_begin_year + 1` season.
 
+### Adding player salaries in the database
+
+    $ flask players-salaries-to-db --path=<csv_file_path> --year=<season_begin_year>
+
 <br><br>
 
 _If you encounters any errors in the API or in the documentation please send a report, I'm an human being :)_

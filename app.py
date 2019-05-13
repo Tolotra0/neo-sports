@@ -93,7 +93,7 @@ def to_db_2(path, year, game_type):
 
 
 # Player salaries import
-@app.cli.command('players-salary-to-db')
+@app.cli.command('players-salaries-to-db')
 @click.option('--path')
 @click.option('--year')
 def to_db_3(path, year):
