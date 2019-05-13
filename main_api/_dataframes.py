@@ -5,6 +5,7 @@
 #
 
 import pandas as pd
+import numpy as np
 from models.db_engine import engine
 from sqlalchemy.sql import text
 
@@ -109,6 +110,8 @@ def get_players(name=None, year=None, age=None, position=None, team=None, game_t
         'game_type': game_type,
         'id': id
     })
+
+    df = df.replace({np.nan: None})
 
     conn.close()
     return df
