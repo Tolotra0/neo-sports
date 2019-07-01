@@ -11,6 +11,7 @@ from main_api.basic_data.globals import globals_api
 
 from main_api.ml_techniques.clustering import clustering_api
 from main_api.ml_techniques.visualization import visualization_api
+from main_api.ml_techniques.prediction import prediction_api
 
 from main_api.ml_techniques.neo_tools import neo_tools_api
 
@@ -19,7 +20,7 @@ from mobile_api.mobile_app import mobile_api
 from flask_cors import CORS
 
 app = Flask(__name__)
-CORS(app)
+CORS(app, resources={r"/*": {"origins": "*"}}, supports_credentials=True)
 
 main_api_url = '/api/main'
 mobile_api_url = '/api/mobile'
@@ -34,6 +35,7 @@ app.register_blueprint(globals_api, url_prefix=main_api_url+'/globals')
 # main API Blueprints / Machine Learning API
 app.register_blueprint(visualization_api, url_prefix=main_api_url+'/visualization')
 app.register_blueprint(clustering_api, url_prefix=main_api_url+'/clustering')
+app.register_blueprint(prediction_api, url_prefix=main_api_url+'/prediction')
 
 # The NEO TOOLS API
 app.register_blueprint(neo_tools_api, url_prefix=main_api_url+'/neotools')
