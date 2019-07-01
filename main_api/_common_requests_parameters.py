@@ -8,7 +8,7 @@
 #  'GameType', 'LocationType', 'TeamConference', 'OppConference']
 #
 base_game_request = 'SELECT Games.Date, Games.Duration, Games.Win, Team.FullName AS TeamFullName, '\
-                'Team.ShortName AS TeamShortName, Opponent.FullName AS OpFullName, '\
+                'Team.ShortName AS TeamShortName, Team.Id as TeamId, Opponent.FullName AS OpFullName, '\
                 'Opponent.ShortName AS OpShortName, TeamGameStats.*, '\
                 'GameTypes.Type AS GameType, GameLocationTypes.LocationType, ' \
                 'TeamConf.Name AS TeamConference, OppConf.Name AS OppConference FROM Games '\

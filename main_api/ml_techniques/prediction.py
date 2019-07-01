@@ -16,6 +16,7 @@ def game_pred():
 
     data = json.loads(request.data)
     df = pd.DataFrame([{
+        'TeamId': data['TeamId'],
         'AST': data['AST'],
         'STL': data['STL'],
         'TF': data['TF'],
