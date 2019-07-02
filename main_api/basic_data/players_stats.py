@@ -53,7 +53,7 @@ def season_stats(season_begin_year=None):
     df = get_players(year=season_begin_year, game_type='regular')
 
     df = df.drop(['Year', 'GameType', 'Id', 'GameTypeId'], axis=1)
-    top = df.sort_values(by=['PTS', 'Salary'], ascending=False)[0:5]
+    top = df.sort_values(by=['PTS', 'Salary'], ascending=False)[0:9]
 
     print(df)
 
